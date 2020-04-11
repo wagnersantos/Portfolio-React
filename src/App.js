@@ -1,11 +1,21 @@
 import React from "react";
 
+import api from "./services/api";
+
 import "./styles.css";
 
 function App() {
-  async function handleAddRepository() {
-    // TODO
-  }
+  const [repositories, setReposiories] = React.useState([]);
+
+  const handleAddRepository = async () => {
+    const repo = {
+      url: "https://github.com/wagnersantos",
+      title: "Wagner",
+      techs: ["Node", "React", "React-native"],
+    };
+    const { data } = await api.post("/repositories", repo);
+    data?.id && setReposiories([...repositories, data]);
+  };
 
   async function handleRemoveRepository(id) {
     // TODO
@@ -16,10 +26,7 @@ function App() {
       <ul data-testid="repository-list">
         <li>
           Repositório 1
-
-          <button onClick={() => handleRemoveRepository(1)}>
-            Remover
-          </button>
+          <button onClick={() => handleRemoveRepository(1)}>Remover</button>
         </li>
       </ul>
 
