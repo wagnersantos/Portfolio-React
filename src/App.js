@@ -7,6 +7,13 @@ import "./styles.css";
 function App() {
   const [repositories, setReposiories] = React.useState([]);
 
+  React.useEffect(() => {
+    (async () => {
+      const { data } = await api.get("/repositories");
+      setReposiories(data);
+    })();
+  }, []);
+
   const handleAddRepository = async () => {
     const repo = {
       url: "https://github.com/wagnersantos",
